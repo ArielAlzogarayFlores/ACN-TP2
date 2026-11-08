@@ -1,0 +1,5 @@
+read modelos/punto_3.zpl
+optimize
+display solution
+write solution soluciones/punto_3.sol
+quit
