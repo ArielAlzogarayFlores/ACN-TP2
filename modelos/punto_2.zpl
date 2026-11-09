@@ -60,4 +60,4 @@ subto max_prod_mensual: forall <i,j> in M*P: x[i,j] <= cap_prod;                
 
 subto max_capacidad_stock: forall <i> in M: sum <j> in P: s[i,j] <= cap_dep;             # Máxima capacidad de stock por mes
 
-subto limite_produccion: forall <i> in M: sum <j> in P: x[i,j] <= lim_prod               # Restricción (2): cota superior de producción total en lotes/mes
+subto limite_produccion: forall <i> in M: sum <j> in P: x[i,j] <= lim_prod;               # Restricción (2): cota superior de producción total en lotes/mes

@@ -58,3 +58,4 @@ subto stock_no_negativo: forall <i,j> in M*P: s[i,j] >= 0;                      
 subto max_prod_mensual: forall <i,j> in M*P: x[i,j] <= cap_prod;                         # Máxima producción mensual para todo producto es de 12 lotes
 
 subto max_capacidad_stock: forall <i> in M: sum <j> in P: s[i,j] <= cap_dep;             # Máxima capacidad de stock por mes
+
