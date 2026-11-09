@@ -1,5 +1,4 @@
-
-# EJERCICIO 2
+# EJERCICIO 1
 
 # DEFINICIÓN DE CONJUNTOS Y PARAMETROS
 
@@ -11,8 +10,8 @@ param c := 370;             # Costo único p/u de cualquier producto
 param cap_prod := 12;       # Capacidad máxima de producción de cualquier producto en lotes/mes
 param cap_dep := 900;       # Capacidad del depósito en unidades, entre todos los productos
 
-param d[P*M] :=       |  1,   2,   3,   4,   5|  # Demanda estimada en unidades de cada producto
-                  | 1 | 20,  30,  10,  15,  15|  # i en P, en cada mes j en M
+param d[M*P] :=       |  1,   2,   3,   4,   5|  # Demanda estimada en unidades de cada mes
+                  | 1 | 20,  30,  10,  15,  15|  # i en M, en cada producto j en P
                   | 2 | 25,  40,  15,  20,  15|
                   | 3 | 30,  40,  15,  20,  20|
                   | 4 | 40,  45,  20,  20,  25|
@@ -35,27 +34,27 @@ param d[P*M] :=       |  1,   2,   3,   4,   5|  # Demanda estimada en unidades 
                   |21 |150, 170,  75,  85, 140|
                   |22 | 60,  60,  30,  30,  70|
                   |23 | 30,  40,  15,  20,  40|
-                  |24 | 20,  25,  10,  15,  20|
+                  |24 | 20,  25,  10,  15,  20|;
 
 # VARIABLES
 
-var x[P*M] integer              # Cantidad de lotes (de 10u) producida del producto i en P en el mes j en M
-var s[P*M_ALT] integer          # Stock del producto i en P en el mes j en M_ALT
+var x[M*P] integer;              # Cantidad de lotes (de 10 unidades c/u) producida del mes i en M en el producto j en P
+var s[M_ALT*P] integer;          # Stock en unidades del mes i en M_ALT en el producto j en P
 
 # FUNCIÓN OBJETIVO
 
-minimize costo: sum <i,j> in P*M: 10*x[i,j]*c
+minimize costo: sum <i,j> in M*P: 10*x[i,j]*c;
 
 # RESTRICCIONES
 
-subto stock: forall <i,j> in P*M: s[i,j] == s[i,j-1] + 10*x[i,j] - d[i,j]               # Stock dependiente de la producción (definición)
+subto stock_inicial: forall <j> in P: s[0,j] == 0;                                       # Stock incial nulo para todos los productos
 
-subto stock_inicial: forall <i> in P: s[i,0] == 0                                       # Stock incial nulo para todos los productos
+subto stock_def: forall <i,j> in M*P: s[i,j] == s[i-1,j] + 10*x[i,j] - d[i,j];           # Stock dependiente de la producción (definición)
 
-subto prod_no_negativo: forall <i,j> in P*M: x[i,j] >= 0                                # Producción no-negativa
+subto prod_no_negativo: forall <i,j> in M*P: x[i,j] >= 0;                                # Producción no-negativa
 
-subto stock_no_negativo: forall <i,j> in P*M: s[i,j] >= 0                               # Stock no-negativo (no es necesario por las primeras dos reestricciones)
+subto stock_no_negativo: forall <i,j> in M*P: s[i,j] >= 0;                               # Stock no-negativo (no es necesario por las primeras dos reestricciones)
 
-subto max_prod_mensual: forall <i,j> in P*M: x[i,j] <= cap_prod                         # Máxima producción mensual para todo producto es de 12 lotes
+subto max_prod_mensual: forall <i,j> in M*P: x[i,j] <= cap_prod;                         # Máxima producción mensual para todo producto es de 12 lotes
 
-subto max_capacidad_stock: forall <j> in M: sum <i> in P: x[i,j] <= cap_dep             # Máxima capacidad de stock por mes
+subto max_capacidad_stock: forall <i> in M: sum <j> in P: s[i,j] <= cap_dep;             # Máxima capacidad de stock por mes
