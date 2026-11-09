@@ -49,7 +49,7 @@ var cap_dep integer;             # Capacidad del depósito en unidades, entre to
 
 # FUNCIÓN OBJETIVO
 
-minimize costo: sum <i,j> in M*P: cap_dep;
+minimize capacidad_deposito: cap_dep;
 
 # RESTRICCIONES
 
@@ -71,4 +71,4 @@ subto limite_sup_tercerizacion: forall <i> in M: sum <j> in P: t[i,j] <= lim_sup
 
 subto limite_inf_tercerizacion: forall <i,j> in M*P: t[i,j] >= t_solicitada[i,j]*lim_inf_terc;              # Restricción (4): cota inferior de tercerización total en unidades/mes
 
-subto capacidad_no_negativa: cap_dep >= 0                                                                   # Restricción (5): capacidad del depósito no-negativa
+subto capacidad_no_negativa: cap_dep >= 0;                                                                  # Restricción (5): capacidad del depósito no-negativa
