@@ -53,20 +53,20 @@ minimize costo: sum <i,j> in M*P: (10*x[i,j]*c_x + t[i,j]*c_t);
 
 # RESTRICCIONES
 
-subto stock_inicial: forall <j> in P: s[0,j] == 0;                                                # Stock incial nulo para todos los productos
+subto stock_inicial: forall <j> in P: s[0,j] == 0;                                                          # Stock incial nulo para todos los productos
 
-subto stock_def: forall <i,j> in M*P: s[i,j] == s[i-1,j] + 10*x[i,j] + t[i,j] - d[i,j];           # Stock dependiente de la producción (definición)
+subto stock_def: forall <i,j> in M*P: s[i,j] == s[i-1,j] + 10*x[i,j] + t_solicitada[i,j]*t[i,j] - d[i,j];   # Stock dependiente de la producción (definición)
 
-subto prod_no_negativo: forall <i,j> in M*P: x[i,j] >= 0;                                         # Producción no-negativa
+subto prod_no_negativo: forall <i,j> in M*P: x[i,j] >= 0;                                                   # Producción no-negativa
 
-subto stock_no_negativo: forall <i,j> in M*P: s[i,j] >= 0;                                        # Stock no-negativo (no es necesario por las primeras dos reestricciones)
+subto stock_no_negativo: forall <i,j> in M*P: s[i,j] >= 0;                                                  # Stock no-negativo (no es necesario por las primeras dos reestricciones)
 
-subto max_prod_mensual: forall <i,j> in M*P: x[i,j] <= cap_prod;                                  # Máxima producción mensual para todo producto es de 12 lotes
+subto max_prod_mensual: forall <i,j> in M*P: x[i,j] <= cap_prod;                                            # Máxima producción mensual para todo producto es de 12 lotes
 
-subto max_capacidad_stock: forall <i> in M: sum <j> in P: s[i,j] <= cap_dep;                      # Máxima capacidad de stock por mes
+subto max_capacidad_stock: forall <i> in M: sum <j> in P: s[i,j] <= cap_dep;                                # Máxima capacidad de stock por mes
 
-subto limite_produccion: forall <i> in M: sum <j> in P: x[i,j] <= lim_prod;                       # Restricción (2): cota superior de producción total en lotes/mes
+subto limite_produccion: forall <i> in M: sum <j> in P: x[i,j] <= lim_prod;                                 # Restricción (2): cota superior de producción total en lotes/mes
 
-subto limite_sup_tercerizacion: forall <i> in M: sum <j> in P: t[i,j] <= lim_sup_terc;            # Restricción (3): cota superior de tercerización total en unidades/mes
+subto limite_sup_tercerizacion: forall <i> in M: sum <j> in P: t[i,j] <= lim_sup_terc;                      # Restricción (3): cota superior de tercerización total en unidades/mes
 
-subto limite_inf_tercerizacion: forall <i,j> in M*P: t[i,j] >= t_solicitada[i,j]*lim_inf_terc;    # Restricción (4): cota inferior de tercerización total en unidades/mes
+subto limite_inf_tercerizacion: forall <i,j> in M*P: t[i,j] >= t_solicitada[i,j]*lim_inf_terc;              # Restricción (4): cota inferior de tercerización total en unidades/mes
