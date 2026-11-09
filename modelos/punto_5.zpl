@@ -1,4 +1,4 @@
-# EJERCICIO 4
+# EJERCICIO 5
 
 # DEFINICIÓN DE CONJUNTOS Y PARAMETROS
 
@@ -67,10 +67,10 @@ subto max_capacidad_stock: forall <i> in M: sum <j> in P: s[i,j] <= cap_dep;    
 
 subto limite_produccion: forall <i> in M: sum <j> in P: x[i,j] <= lim_prod;                                 # Restricción (2): cota superior de producción total en lotes/mes
 
-subto limite_sup_tercerizacion: forall <i> in M: sum <j> in P: t[i,j] <= lim_sup_terc;                      # Restricción (3): cota superior de tercerización total en unidades/mes
+subto limite_sup_ter_total: forall <i> in M: sum <j> in P: t[i,j] <= lim_sup_terc;                          # Restricción (3): cota superior de tercerización total en unidades/mes
 
-subto limite_inf_tercerizacion: forall <i,j> in M*P: t[i,j] >= t_solicitada[i,j]*lim_inf_terc;              # Restricción (4): cota inferior de tercerización total en unidades/mes
+subto limite_inf_ter: forall <i,j> in M*P: t[i,j] >= t_solicitada[i,j]*lim_inf_terc;                        # Restricción (4): cota inferior de tercerización en unidades/mes
 
-subto ultima: forall <i,j> in M*P: t[i,j] <= t_solicitada[i,j]*lim_sup_terc; 
+subto limite_sup_ter: forall <i,j> in M*P: t[i,j] <= t_solicitada[i,j]*lim_sup_terc;                        # Restricción (5): cota superior de terciaricación en unidades/mes 
 
 subto capacidad_no_negativa: cap_dep >= 0;                                                                  # Restricción (5): capacidad del depósito no-negativa
