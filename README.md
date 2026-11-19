@@ -40,5 +40,5 @@ scip -f modelos/punto_1.zpl
 De modo más directo y guardando la solución:
 
 ```
-scip -b comandos/punto_1.txt
+scip -b scripts/punto_1.txt
 ```
